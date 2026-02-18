@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.neo4j/
+.idea/
+.vscode/
