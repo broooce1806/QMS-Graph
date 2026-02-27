@@ -3,7 +3,7 @@ from database import get_session, SessionLocal
 from pydantic import BaseModel
 from models import ProjectDB, RequirementDB, TestCaseDB, TestRunDB, DefectDB
 from sqlalchemy.orm import Session
-import pandas as pd
+# import pandas as pd
 import io
 from typing import Optional
 router = APIRouter(prefix="/requirements", tags=["Requirements"])
@@ -133,6 +133,7 @@ def get_requirements(project_id: Optional[str] = Query(None), db: Session = Depe
 
 @router.post("/import/inspect")
 async def inspect_excel(file: UploadFile = File(...)):
+    import pandas as pd
     contents = await file.read()
     try:
         xl = pd.ExcelFile(io.BytesIO(contents))
@@ -154,6 +155,7 @@ async def import_mapped_excel(
     db: Session = Depends(get_db)
 ):
     import json
+    import pandas as pd
     try:
         field_map = json.loads(mapping)
         contents = await file.read()
@@ -233,6 +235,7 @@ async def import_requirements_excel(
     project_id: Optional[str] = Query(None),
     db: Session = Depends(get_db)
 ):
+    import pandas as pd
     print(f"DEBUG: Starting Excel import. Type: {table_type}, Project: {project_id}")
     contents = await file.read()
     try:
