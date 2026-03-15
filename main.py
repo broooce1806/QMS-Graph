@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from requirements import router as requirement_router
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+from requirements import router as requirement_router
 from database import init_db
 app = FastAPI()
 
@@ -20,7 +21,7 @@ app.include_router(requirement_router)
 def root():
     return {"message": "QMS Tool API running"}
 
-from fastapi.responses import HTMLResponse
+
 
 @app.get("/visualize/{req_id}", response_class=HTMLResponse)
 def visualize(req_id: str):
@@ -70,11 +71,3 @@ def visualize(req_id: str):
     </body>
     </html>
     """
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
